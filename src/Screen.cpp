@@ -63,7 +63,7 @@ bool Screen::Init() {
 
 	//buffer[30000] = 0xFFFFFFFF;
 
-	for (int i = 0; i < SCREEN_HEIGHT*SCREEN_WIDTH; i++){
+	for (int i = 0; i < SCREEN_HEIGHT*SCREEN_WIDTH; i++) {
 		m_buffer[i] = 0xFFFF00FF;
 	}
 	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH*sizeof(Uint32));
@@ -74,11 +74,18 @@ bool Screen::Init() {
 	return true;
 }
 
-bool Screen::processEvents(){
-
+bool Screen::processEvents() {
+	SDL_Event event;
+	// this is what closes the screen when click on the left corner with X in it.
+	while (SDL_PollEvent (&event)) {
+		if(event.type == SDL_QUIT) {
+			return false;
+		}
+	}
 	return true;
 }
-void Screen::close(){
+
+void Screen::close() {
 	delete [] m_buffer;
 	SDL_DestroyTexture(m_texture);
 	SDL_DestroyWindow(m_window);

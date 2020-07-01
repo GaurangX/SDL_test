@@ -17,23 +17,16 @@ int main() {
 	Screen screen;
 
 	if (screen.Init() == false) {
-
 		cout << " Error initializing SDL." << endl;
 	}
 
-	bool quit = false;
-	SDL_Event event;
-
-	// Game loop
-	while (!quit) {
+	// Main game loop
+	while (true) {
 		// update particles
 		// draw particles
 		// check messages/events
-
-		while (SDL_PollEvent(&event)) {
-			if(event.type == SDL_QUIT) {
-				quit = true;
-			}
+		if (screen.processEvents() ==  false) {
+			break;
 		}
 	}
 
