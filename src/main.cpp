@@ -57,6 +57,9 @@ int main() {
 
 		//set update screen with pixel data
 		screen.update();
+		screen.clear();
+		// make swarm move
+		swarm.update();
 
 		// check messages/events
 		if (screen.processEvents() ==  false) {

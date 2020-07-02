@@ -29,6 +29,7 @@ public:
 	bool processEvents();
 	void setPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B, Uint8 Alpha);
 	void update();
+	void clear();
 	void close();
 
 };
