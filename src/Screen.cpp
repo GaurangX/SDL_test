@@ -59,18 +59,7 @@ bool Screen::Init() {
 	m_buffer = new Uint32[SCREEN_HEIGHT*SCREEN_WIDTH];
 
 	// Most important function -> set to each pixel as 255 (white)
-	memset(m_buffer, 0x00, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
-
-	//buffer[30000] = 0xFFFFFFFF;
-
-	for (int i = 0; i < SCREEN_HEIGHT*SCREEN_WIDTH; i++) {
-		m_buffer[i] = 0xFFFF00FF;
-	}
-	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH*sizeof(Uint32));
-	SDL_RenderClear(m_renderer);
-	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-	SDL_RenderPresent(m_renderer);
-
+	// memset(m_buffer, 0x00, SCREEN_WIDTH*SCREEN_HEIGHT*sizeof(Uint32));
 	return true;
 }
 
@@ -83,6 +72,29 @@ bool Screen::processEvents() {
 		}
 	}
 	return true;
+}
+
+void Screen::setPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B, Uint8 Alpha) {
+	Uint32 color = 0;
+	Alpha = 0xFF;
+
+	color += R;
+	color <<= 8;
+	color += G;
+	color <<= 8;
+	color += B;
+	color <<= 8;
+	color += Alpha;
+
+	// rastering? (x,y) co-ordinate to the index of buffer
+	m_buffer[(y * SCREEN_WIDTH) + x] = color;
+}
+
+void Screen::update() {
+	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH*sizeof(Uint32));
+	SDL_RenderClear(m_renderer);
+	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+	SDL_RenderPresent(m_renderer);
 }
 
 void Screen::close() {
