@@ -8,12 +8,19 @@
 
 #include <iostream>
 #include <math.h>
+#include <stdlib.h>
+#include <SDL.h>
+#include <time.h>
+
 #include "Screen.h"
+#include "Swarm.h"
 
 using namespace std;
 using namespace gru;
 
 int main() {
+
+	srand(time(NULL));
 
 	Screen screen;
 
@@ -21,9 +28,10 @@ int main() {
 		cout << " Error initializing SDL." << endl;
 	}
 
+	Swarm swarm;
+
 	// Main game loop
 	while (true) {
-		// update particles
 
 		// draw particles
 		int elapsed = SDL_GetTicks(); // returns ms.
@@ -32,11 +40,16 @@ int main() {
 		unsigned char g = (unsigned char) ((1 + sin(elapsed * 0.0002)) * 128);
 		unsigned char b = (unsigned char) ((1 + sin(elapsed * 0.0003)) * 128);
 
-		for (int y = 0; y < Screen::SCREEN_HEIGHT; y++) {
-			for (int x = 0; x < Screen::SCREEN_WIDTH; x++) {
-				// setPixel (x, y, R, G, B)
-				screen.setPixel (x, y, r, g, b, 255);
-			}
+		// update particles
+		const Particle * const particles = swarm.getParticles();
+
+		for (int i = 0; i < Swarm::NPARTICLES; i++) {
+			Particle particle = particles[i];
+
+			int x = (particle.m_x + 1) * Screen::SCREEN_WIDTH / 2;
+			int y = (particle.m_y + 1) * Screen::SCREEN_HEIGHT / 2;
+
+			screen.setPixel(x, y, r, g, b, 255);
 		}
 
 		// one pixel data
@@ -49,7 +62,6 @@ int main() {
 		if (screen.processEvents() ==  false) {
 			break;
 		}
-
 	}
 
 	screen.close();

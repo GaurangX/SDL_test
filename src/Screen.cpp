@@ -75,6 +75,13 @@ bool Screen::processEvents() {
 }
 
 void Screen::setPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B, Uint8 Alpha) {
+
+	if (x < 0  || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+	{
+		return;
+	}
+
+
 	Uint32 color = 0;
 	Alpha = 0xFF;
 
