@@ -15,15 +15,17 @@ namespace gru {
 
 class Swarm {
 public:
-	const static int NPARTICLES = 1000;
+	const static int NPARTICLES = 10000;
 
 private:
 	Particle * m_particles; // we dont want the m_particles to point else where
+	int lastTime;
+
 
 public:
 	Swarm();
 	virtual ~Swarm();
-	void update();
+	void update(int elapsed);
 
 	const Particle * const getParticles() { return m_particles; }; //
 };

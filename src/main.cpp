@@ -46,8 +46,9 @@ int main() {
 		for (int i = 0; i < Swarm::NPARTICLES; i++) {
 			Particle particle = particles[i];
 
-			int x = (particle.m_x + 1) * Screen::SCREEN_WIDTH / 2;
-			int y = (particle.m_y + 1) * Screen::SCREEN_HEIGHT / 2;
+			// Done to avoid oval shaped cluster due to rectangle screen
+			int x = (particle.m_x + 1) * Screen::SCREEN_WIDTH/2;
+			int y = particle.m_y * Screen::SCREEN_WIDTH/2 + Screen::SCREEN_HEIGHT/2;
 
 			screen.setPixel(x, y, r, g, b, 255);
 		}
@@ -57,9 +58,13 @@ int main() {
 
 		//set update screen with pixel data
 		screen.update();
-		screen.clear();
+		// clear deletes the trace of pixels.
+		//screen.clear();
+
+		screen.boxBlur();
+
 		// make swarm move
-		swarm.update();
+		swarm.update(elapsed);
 
 		// check messages/events
 		if (screen.processEvents() ==  false) {
