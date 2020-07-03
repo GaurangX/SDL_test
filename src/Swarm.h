@@ -15,7 +15,7 @@ namespace gru {
 
 class Swarm {
 public:
-	const static int NPARTICLES = 10000;
+	const static int NPARTICLES = 5000;
 
 private:
 	Particle * m_particles; // we dont want the m_particles to point else where

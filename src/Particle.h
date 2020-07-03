@@ -19,10 +19,12 @@ struct Particle {
 
 	//double m_xspeed;
 	//double m_yspeed;
-
+private:
 	double m_speed;
 	double m_direction;
 
+private:
+	void init();
 
 public:
 	Particle();

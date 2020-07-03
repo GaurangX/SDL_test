@@ -17,6 +17,7 @@ Swarm::~Swarm() {
 	delete [] m_particles;
 }
 
+// update each particle
 void Swarm::update(int elapsed) {
 
 	int interval = elapsed - lastTime;
